@@ -1,7 +1,7 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
-#include "utils.hpp"
+#include "include/utils.hpp"
 
 // Linear transform to find the orthogonal vector of the edge
 Vector2 calculate_normalised_projection_axis(const Vector2 &current_point, const Vector2 &next_point) {

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "include/separating_axis.hpp"
+#include "separating_axis.hpp"
 
 std::vector<Vector2> calculate_bounds(const double x, const double y, const double yaw, const double centre_to_front, const double centre_to_rear, const double centre_to_side) {
     
