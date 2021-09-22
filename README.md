@@ -1,2 +1,2 @@
 # 2d-separating-axis-theorem
-C++ implementation of a 2D separating axis algorithm
+This repository contains a C++ implementation of the 2D separating axis algorithm. For more information, read [here](https://gamedevelopment.tutsplus.com/tutorials/collision-detection-using-the-separating-axis-theorem--gamedev-169).
