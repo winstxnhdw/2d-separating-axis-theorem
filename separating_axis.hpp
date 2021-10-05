@@ -7,15 +7,15 @@
 
 // Linear transform to find the orthogonal vector of the edge
 Vector2 calculate_normalised_projection_axis(const Vector2 &current_point, const Vector2 &next_point) {
-        const double axis_x = -(next_point.y - current_point.y);
-        const double axis_y =   next_point.x - current_point.x;
-        const double magnitude = hypot(axis_x, axis_y);
+    const double axis_x = -(next_point.y - current_point.y);
+    const double axis_y =   next_point.x - current_point.x;
+    const double magnitude = hypot(axis_x, axis_y);
 
-        Vector2 axis_normalised;
-        axis_normalised.x = axis_x / magnitude;
-        axis_normalised.y = axis_y / magnitude;
+    Vector2 axis_normalised;
+    axis_normalised.x = axis_x / magnitude;
+    axis_normalised.y = axis_y / magnitude;
 
-        return axis_normalised;
+    return axis_normalised;
 }
 
 // Project the vertices of each polygon onto a axis
