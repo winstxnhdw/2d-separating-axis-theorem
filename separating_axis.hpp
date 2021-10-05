@@ -89,6 +89,6 @@ bool separating_axis_intersect(const std::vector<Vector2> &bounds_a, const std::
         }
     }
 
-	// Intersects
+    // Intersects
     return true;
 }
