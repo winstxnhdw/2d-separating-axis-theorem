@@ -4,4 +4,5 @@ This repository contains a simple C++ implementation of a 2D separating axis alg
 ## Test
 ```bash
 g++ main.cpp
+./main.out
 ```
