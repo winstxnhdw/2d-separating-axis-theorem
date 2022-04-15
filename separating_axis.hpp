@@ -38,15 +38,8 @@ bool is_overlapping(const std::vector<double> &projections_a, const std::vector<
     const double max_projection_b = *std::max_element(projections_b.begin(), projections_b.end());
     const double min_projection_b = *std::min_element(projections_b.begin(), projections_b.end());
 
-    // Does not intersect
-    if (max_projection_a < min_projection_b || max_projection_b < min_projection_a) {
-        return false;
-    }
-
-    // Projection overlaps but may not necessarily be intersecting yet
-    else {
-        return true;
-    }
+    // True if projection overlaps but does not necessarily mean the polygons are intersecting yet
+    return !(max_projection_a < min_projection_b || max_projection_b < min_projection_a);
 }
 
 // Check if two convex polygons intersect
