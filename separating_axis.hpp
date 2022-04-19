@@ -6,7 +6,15 @@
 #include "include/utils.hpp"
 
 // Linear transform to find the orthogonal vector of the edge
-Vector2 calculate_normalised_projection_axis(const Vector2 &current_point, const Vector2 &next_point) {
+Vector2 calculate_normalised_projection_axis(const std::vector<Vector2> &bounds, const size_t current_index) {
+    Vector2 current_point;
+    current_point.x = bounds[current_index].x;
+    current_point.y = bounds[current_index].y;
+
+    Vector2 next_point;
+    next_point.x = bounds[(current_index + 1) % bounds.size()].x;
+    next_point.y = bounds[(current_index + 1) % bounds.size()].y;
+
     const double axis_x = -(next_point.y - current_point.y);
     const double axis_y =   next_point.x - current_point.x;
     const double magnitude = hypot(axis_x, axis_y);
@@ -45,43 +53,23 @@ bool is_overlapping(const std::vector<double> &projections_a, const std::vector<
 // Check if two convex polygons intersect
 bool separating_axis_intersect(const std::vector<Vector2> &bounds_a, const std::vector<Vector2> &bounds_b) {
     for (size_t i = 0; i < bounds_a.size(); i++) {
-        Vector2 current_point;
-        current_point.x = bounds_a[i].x;
-        current_point.y = bounds_a[i].y;
-
-        Vector2 next_point;
-        next_point.x = bounds_a[(i + 1) % bounds_a.size()].x;
-        next_point.y = bounds_a[(i + 1) % bounds_a.size()].y;
-        
-        Vector2 axis_normalised = calculate_normalised_projection_axis(current_point, next_point);
+        Vector2 axis_normalised = calculate_normalised_projection_axis(bounds_a, i);
 
         std::vector<double> projections_a;
         std::vector<double> projections_b;
         compute_projections(bounds_a, bounds_b, axis_normalised, projections_a, projections_b);
 
-        if (!is_overlapping(projections_a, projections_b)) {
-            return false;
-        }
+        if (!is_overlapping(projections_a, projections_b)) return false;
     }
 
     for (size_t i = 0; i < bounds_b.size(); i++) {
-        Vector2 current_point;
-        current_point.x = bounds_b[i].x;
-        current_point.y = bounds_b[i].y;
-
-        Vector2 next_point;
-        next_point.x = bounds_b[(i + 1) % bounds_b.size()].x;
-        next_point.y = bounds_b[(i + 1) % bounds_b.size()].y;
-        
-        Vector2 axis_normalised = calculate_normalised_projection_axis(current_point, next_point);
+        Vector2 axis_normalised = calculate_normalised_projection_axis(bounds_b, i);
 
         std::vector<double> projections_a;
         std::vector<double> projections_b;
         compute_projections(bounds_a, bounds_b, axis_normalised, projections_a, projections_b);
 
-        if (!is_overlapping(projections_a, projections_b)) {
-            return false;
-        }
+        if (!is_overlapping(projections_a, projections_b)) return false;
     }
 
     // Intersects
