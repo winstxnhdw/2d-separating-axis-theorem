@@ -28,12 +28,12 @@ Vector2 calculate_normalised_projection_axis(const std::vector<Vector2> &bounds,
 
 // Project the vertices of each polygon onto a axis
 void compute_projections(const std::vector<Vector2> &bounds_a, const std::vector<Vector2> &bounds_b, const Vector2 &axis_normalised, std::vector<double> &projections_a, std::vector<double> &projections_b) {
-    projections_a.reserve(bounds_a.size());
-    projections_b.reserve(bounds_b.size());
+    projections_a.clear();
+    projections_b.clear();
 
-    for (size_t j = 0; j < bounds_a.size(); j++) {
-        const double projection_a = dot(axis_normalised, bounds_a[j]);
-        const double projection_b = dot(axis_normalised, bounds_b[j]);
+    for (size_t i = 0; i < bounds_a.size(); i++) {
+        const double projection_a = dot(axis_normalised, bounds_a[i]);
+        const double projection_b = dot(axis_normalised, bounds_b[i]);
         projections_a.push_back(projection_a);
         projections_b.push_back(projection_b);
     }
@@ -52,23 +52,20 @@ bool is_overlapping(const std::vector<double> &projections_a, const std::vector<
 
 // Check if two convex polygons intersect
 bool separating_axis_intersect(const std::vector<Vector2> &bounds_a, const std::vector<Vector2> &bounds_b) {
+    std::vector<double> projections_a;
+    std::vector<double> projections_b;
+    projections_a.reserve(bounds_a.size());
+    projections_b.reserve(bounds_b.size());
+
     for (size_t i = 0; i < bounds_a.size(); i++) {
         Vector2 axis_normalised = calculate_normalised_projection_axis(bounds_a, i);
-
-        std::vector<double> projections_a;
-        std::vector<double> projections_b;
         compute_projections(bounds_a, bounds_b, axis_normalised, projections_a, projections_b);
-
         if (!is_overlapping(projections_a, projections_b)) return false;
     }
 
     for (size_t i = 0; i < bounds_b.size(); i++) {
         Vector2 axis_normalised = calculate_normalised_projection_axis(bounds_b, i);
-
-        std::vector<double> projections_a;
-        std::vector<double> projections_b;
         compute_projections(bounds_a, bounds_b, axis_normalised, projections_a, projections_b);
-
         if (!is_overlapping(projections_a, projections_b)) return false;
     }
 
