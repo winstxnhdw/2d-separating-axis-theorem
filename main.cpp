@@ -37,8 +37,8 @@ int main() {
     const double centre_to_rear2 = 3.0;
     const double centre_to_side2 = 1.0;
 
-    std::vector<Vector2> A = calculate_bounds(x1, y1, yaw1, centre_to_front1, centre_to_rear1, centre_to_side1);
-    std::vector<Vector2> B = calculate_bounds(x2, y2, yaw2, centre_to_front2, centre_to_rear2, centre_to_side2);
+    const std::vector<Vector2> A = calculate_bounds(x1, y1, yaw1, centre_to_front1, centre_to_rear1, centre_to_side1);
+    const std::vector<Vector2> B = calculate_bounds(x2, y2, yaw2, centre_to_front2, centre_to_rear2, centre_to_side2);
     
     std::cout << (separating_axis_intersect(A, B) == true ? "The polygons intersect." : "The polygons do not intersect.") << std::endl;
 }
